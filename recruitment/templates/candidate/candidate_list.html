@@ -246,12 +246,12 @@
                   {% if perms.recruitment.change_candidate %}
                     <button
                       type="button"
-                      hx-get="{% url 'send-mail' cand.id %}"
-                      title="{% trans 'Send Mail' %}"
-                      hx-target="#objectCreateModalTarget"
+                      hx-get='{% url "send-mail" cand.id %}'
+                      title="{% trans "Send Mail" %}"
+                      hx-target="#objectDetailsModalTarget"
                       class="oh-btn oh-btn--light-bkg w-100"
                       data-toggle="oh-modal-toggle"
-                      data-target="#objectCreateModal"
+                      data-target="#objectDetailsModal"
                       style="padding:0.8rem 1rem"
                     >
                       <ion-icon name="mail-open-outline"></ion-icon>

@@ -359,12 +359,16 @@
                   </td>
                 </tr>
               {% endfor %}
-              <tr>
+              <!-- <tr>
                 <td class="">{% trans "Federal Tax" %}</td>
                 <td class="oh-allowance-amount">
 									{{federal_tax|floatformat:2|currency_symbol_position}}
                 </td>
-              </tr>
+              </tr> -->
+
+
+
+
               {% for deduction in tax_deductions %}
                 <tr>
                   <td class="">{{deduction.title}}</td>
@@ -406,10 +410,13 @@
                   {{net_pay|floatformat:2|currency_symbol_position}}
                 </td>
               </tr>
+
             </tbody>
           </table>
         </div>
-
+<p style="margin-top:12px;font-size:11px;line-height:1.5;opacity:0.85;">
+  Please note that employees are responsible for their own tax obligations. It is important to ensure that taxes are accurately reported and paid in accordance with local laws and regulations.
+</p>
       </div>
     </div>
     </body>

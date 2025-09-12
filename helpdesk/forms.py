@@ -85,6 +85,7 @@ class FAQForm(ModelForm):
 
 
 class TicketForm(ModelForm):
+    deadline = forms.DateField(widget=forms.DateInput(attrs={"type": "date"}))
 
     class Meta:
         model = Ticket

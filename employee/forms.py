@@ -66,11 +66,8 @@ class ModelForm(forms.ModelForm):
         reload_queryset(self.fields)
         for _, field in self.fields.items():
             widget = field.widget
-            if isinstance(widget, forms.DateInput):
-                field.initial = date.today
-                widget.input_type = "date"
-                widget.format = "%Y-%m-%d"
-                field.input_formats = ["%Y-%m-%d"]
+            if isinstance(widget, (forms.DateInput)):
+                field.initial = date.today()
 
             if isinstance(
                 widget,
@@ -306,6 +303,11 @@ class EmployeeWorkInformationForm(ModelForm):
         fields = "__all__"
         exclude = ("employee_id", "additional_info", "experience")
 
+        widgets = {
+            "date_joining": DateInput(attrs={"type": "date"}),
+            "contract_end_date": DateInput(attrs={"type": "date"}),
+        }
+
     def __init__(self, *args, disable=False, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields["email"].widget.attrs["autocomplete"] = "email"
@@ -387,6 +389,11 @@ class EmployeeWorkInformationUpdateForm(ModelForm):
         model = EmployeeWorkInformation
         fields = "__all__"
         exclude = ("employee_id",)
+
+        widgets = {
+            "date_joining": DateInput(attrs={"type": "date"}),
+            "contract_end_date": DateInput(attrs={"type": "date"}),
+        }
 
     def as_p(self, *args, **kwargs):
         context = {"form": self}
@@ -688,6 +695,9 @@ class DisciplinaryActionForm(ModelForm):
         model = DisciplinaryAction
         fields = "__all__"
         exclude = ["objects", "is_active"]
+        widgets = {
+            "start_date": forms.DateInput(attrs={"type": "date"}),
+        }
 
     action = forms.ModelChoiceField(
         queryset=Actiontype.objects.all(),

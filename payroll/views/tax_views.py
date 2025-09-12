@@ -297,5 +297,4 @@ def update_py_code(request, pk):
     if not filing.python_code == code:
         filing.python_code = code
         filing.save()
-        messages.success(request, _("Python code saved successfully!"))
     return JsonResponse({"message": "success"})

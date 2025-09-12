@@ -119,4 +119,4 @@ def pass_print(*args, **kwargs):
         start_date=start_date,
         end_date=end_date,
     )
-    return federal_tax_for_period
+    return 0#federal_tax_for_period
