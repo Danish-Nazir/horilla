@@ -5,27 +5,51 @@
   <meta charset="utf-8">
   <title>Payslip</title>
   <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: Arial, sans-serif;
+    }
+
+    h2, h3, h4 {
+      margin: 4px 0;
+    }
+
     .oh-payslip__table {
       width: 100%;
       border-collapse: collapse;
-      margin-top: 12px;
+      margin-top: 20px;
     }
-    .oh-payslip__table th, .oh-payslip__table td {
-      border: 1px solid #333;
-      padding: 6px;
+
+    .oh-payslip__table td {
+      padding: 6px 4px;
       text-align: left;
+      border: none;   /* remove borders */
     }
-    .oh-payslip__table th {
-      background: #f2f2f2;
+
+    .section-heading {
+      font-weight: bold;
+      margin-top: 20px;
+      margin-bottom: 8px;
+    }
+
+    .total-row td {
+      font-weight: bold;
+    }
+
+    .disclaimer {
+      margin-top: 20px;
+      font-size: 12px;
+      color: #333;
     }
   </style>
 </head>
 <body>
 
-  <!-- Company and header -->
-  <h2>{{company.name}}</h2>
-  <p>{{company.address}}</p>
-  <h3>{{start_date}} to {{end_date}} {% trans "Payslip" %}</h3>
+  <!-- Payslip header -->
+  <h2>{% trans "Payslip" %}</h2>
+  <h3>{{end_date|date:"F Y"}}</h3>
+  <h4>{{start_date}} to {{end_date}}</h4>
 
   <!-- Employee info -->
   <table class="oh-payslip__table">
@@ -45,82 +69,80 @@
     </tbody>
   </table>
 
-  <!-- Allowances -->
+  <!-- Salary Details -->
+  <div class="section-heading">{% trans "Salary Details" %}</div>
   <table class="oh-payslip__table">
-    <thead>
-      <tr>
-        <th>{% trans "Allowances" %}</th>
-        <th>{% trans "Amount" %}</th>
-      </tr>
-    </thead>
     <tbody>
+      <!-- Allowances -->
       <tr>
         <td>{% trans "Basic Salary" %}</td>
         <td>{{basic_pay|floatformat:2|currency_symbol_position}}</td>
+        <td></td>
+        <td></td>
       </tr>
       {% for allowance in all_allowances %}
       <tr>
         <td>{{allowance.title}}</td>
         <td>{{allowance.amount|floatformat:2|currency_symbol_position}}</td>
+        <td></td>
+        <td></td>
       </tr>
       {% endfor %}
-    </tbody>
-  </table>
 
-  <!-- Deductions -->
-  <table class="oh-payslip__table">
-    <thead>
-      <tr>
-        <th>{% trans "Deductions" %}</th>
-        <th>{% trans "Amount" %}</th>
-      </tr>
-    </thead>
-    <tbody>
+      <!-- Deductions -->
       {% for deduction in basic_pay_deductions %}
       <tr>
         <td>{{deduction.title}}</td>
         <td>-{{deduction.amount|floatformat:2|currency_symbol_position}}</td>
+        <td></td>
+        <td></td>
       </tr>
       {% endfor %}
       {% for deduction in gross_pay_deductions %}
       <tr>
         <td>{{deduction.title}}</td>
         <td>-{{deduction.amount|floatformat:2|currency_symbol_position}}</td>
+        <td></td>
+        <td></td>
       </tr>
       {% endfor %}
       {% for deduction in pretax_deductions %}
       <tr>
         <td>{{deduction.title}}</td>
         <td>-{{deduction.amount|floatformat:2|currency_symbol_position}}</td>
+        <td></td>
+        <td></td>
       </tr>
       {% endfor %}
       {% for deduction in tax_deductions %}
       <tr>
         <td>{{deduction.title}}</td>
         <td>-{{deduction.amount|floatformat:2|currency_symbol_position}}</td>
+        <td></td>
+        <td></td>
       </tr>
       {% endfor %}
       {% for deduction in post_tax_deductions %}
       <tr>
         <td>{{deduction.title}}</td>
         <td>-{{deduction.amount|floatformat:2|currency_symbol_position}}</td>
+        <td></td>
+        <td></td>
       </tr>
       {% endfor %}
+
+      <!-- Total -->
+      <tr class="total-row">
+        <td>{% trans "Total Payable" %}</td>
+        <td>{{net_pay|floatformat:2|currency_symbol_position}}</td>
+        <td></td>
+        <td></td>
+      </tr>
     </tbody>
   </table>
 
-  <!-- Total Payable -->
-  <table class="oh-payslip__table">
-    <thead>
-      <tr>
-        <th>{% trans "Total Payable" %}</th>
-        <th>{{net_pay|floatformat:2|currency_symbol_position}}</th>
-      </tr>
-    </thead>
-  </table>
-
   <!-- Disclaimer -->
-  <p style="margin-top:12px;font-size:12px;">
+  <p class="disclaimer">
     {% trans "Please note that employees are responsible for their own tax obligations. It is important to ensure that taxes are accurately reported and paid in accordance with local laws and regulations." %}
   </p>
 
